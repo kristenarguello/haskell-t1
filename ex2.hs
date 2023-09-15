@@ -1,0 +1,4 @@
+-- Definir uma função recursiva que recebe um número decimal inteiro não-negativo, um número de bits
+-- desejado e retorna o valor equivalente em binário (interpretado como número inteiro sem sinal) com o
+-- número de bits informado. Por exemplo, 𝑑𝑒𝑐2𝑏𝑖𝑛 2 8 deve retornar [0,0,0,0,0,0,1,0]. 𝑑𝑒𝑐2𝑏𝑖𝑛 ∷ 𝐼𝑛𝑡 →
+-- 𝐼𝑛𝑡 → [𝐼𝑛𝑡]

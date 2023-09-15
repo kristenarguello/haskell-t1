@@ -1,0 +1,2 @@
+-- Definir uma função recursiva que recebe um número binário (interpretado como número inteiro sem sinal) e
+-- retorna o valor equivalente em decimal. 𝑏𝑖𝑛2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡

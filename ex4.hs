@@ -1,0 +1,4 @@
+-- Definir uma função recursiva que recebe um número decimal inteiro, um número de bits desejado e retorna
+-- o valor equivalente em binário na representação de complemento de dois com o número de bits informado.
+-- Por exemplo, 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 (−2) 8 deve retornar [1,1,1,1,1,1,1,0] 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 ∷ 𝐼𝑛𝑡 → 𝐼𝑛𝑡 →
+-- [𝐼𝑛𝑡]
