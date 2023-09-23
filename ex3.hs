@@ -1,2 +1,0 @@
--- Definir uma função recursiva que recebe um número binário na representação de complemento de dois e
--- retorna o valor equivalente em decimal inteiro. 𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡
