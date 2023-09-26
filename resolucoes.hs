@@ -26,6 +26,8 @@ bincompl2dec [] = 0
 -- o valor equivalente em binário na representação de complemento de dois com o número de bits informado.
 -- Por exemplo, 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 (−2) 8 deve retornar [1,1,1,1,1,1,1,0] 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 ∷ 𝐼𝑛𝑡 → 𝐼𝑛𝑡 →
 -- [𝐼𝑛𝑡]
+dec2bincompl :: Int -> Int -> [Int]
+dec2bincompl 0 0 = []
 
 
 -- Definir uma função recursiva que recebe um número fracionário decimal por parâmetro e devolve um
@@ -36,6 +38,8 @@ bincompl2dec [] = 0
 -- representação. Por exemplo, 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 (−8.5) deve retornar
 -- ([1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]). 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 ∷ 𝐷𝑜𝑢𝑏𝑙𝑒 →
 -- ([𝐼𝑛𝑡],[𝐼𝑛𝑡])
+frac2bin :: Double -> ([Int], [Int])
+frac2bin 0 = ([],[])
 
 
 -- Definir uma função recursiva que recebe uma tupla com dois números binários representando,
@@ -44,3 +48,5 @@ bincompl2dec [] = 0
 -- bits, e retorna o correspondente valor fracionário decimal. Por exemplo,
 -- 𝑏𝑖𝑛2𝑓𝑟𝑎𝑐 ([0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0],[1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]) deve retornar
 -- 16392.625. 𝑏𝑖𝑛2𝑓𝑟𝑎𝑐 ∷ ([𝐼𝑛𝑡],[𝐼𝑛𝑡]) → 𝐷𝑜𝑢𝑏𝑙�
+bin2frac :: ([Int], [Int]) -> Double
+bin2frac ([], []) = 0
