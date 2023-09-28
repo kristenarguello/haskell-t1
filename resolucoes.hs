@@ -32,7 +32,6 @@ soma1 [] = []
 soma1 b = dec2bin (somadec + 1) (length b)
             where somadec = bin2dec b
 
-
 -- Definir uma função recursiva que recebe um número decimal inteiro, um número de bits desejado e retorna
 -- o valor equivalente em binário na representação de complemento de dois com o número de bits informado.
 -- Por exemplo, 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 (−2) 8 deve retornar [1,1,1,1,1,1,1,0] 𝑑𝑒𝑐2𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙 ∷ 𝐼𝑛𝑡 → 𝐼𝑛𝑡 →
@@ -58,8 +57,8 @@ separainteiro :: Double -> (Int, Double)
 separainteiro 0.0 = (0, 0.0)
 separainteiro v
     | v < 0 = let (intPart, fracPart) = separainteiro (-v)
-              in (-intPart, -fracPart)
-    | otherwise = let intPart = truncate v
+              in (-intPart, fracPart)
+    | otherwise = let intPart = floor v
                       fracPart = v - fromIntegral intPart
                   in (intPart, fracPart)
 
@@ -70,7 +69,6 @@ fracionario x n = let newX = x * 2
                       fracPart = fracionario (newX - fromIntegral intPart) (n - 1)
                   in intPart : fracPart
 
-
 -- Definir uma função recursiva que recebe uma tupla com dois números binários representando,
 -- respectivamente, a parte inteira (na representação de complemento de dois com 16 bits) e a parte
 -- fracionária (na representação de binário fracionado com 16 bits) de um número binário de ponto fixo com 32
@@ -79,3 +77,11 @@ fracionario x n = let newX = x * 2
 -- 16392.625. 𝑏𝑖𝑛2𝑓𝑟𝑎𝑐 ∷ ([𝐼𝑛𝑡],[𝐼𝑛𝑡]) → 𝐷𝑜𝑢𝑏𝑙�
 bin2frac :: ([Int], [Int]) -> Double
 bin2frac ([], []) = 0
+bin2frac (v, t) = if bincompl2dec v < 0
+                    then fromIntegral (bincompl2dec v) - decimal t (-1.0)
+                    else fromIntegral (bincompl2dec v) + decimal t (-1.0)
+
+decimal :: [Int] -> Double -> Double
+decimal [] _ = 0.0
+decimal (0:xs) i = 0 + decimal xs (i-1.0) 
+decimal (1:xs) i = 2.0 ** i + decimal xs (i-1.0)
