@@ -40,9 +40,11 @@ soma1 b = dec2bin (somadec + 1) (length b)
 -- [𝐼𝑛𝑡]
 dec2bincompl :: Int -> Int -> [Int]
 dec2bincompl 0 0 = []
+dec2bincompl v t = if v > 0 
+                    then dec2bin v t
+                    else soma1(invert (dec2bincompl (v * (-1)) t))
 
-
--- Definir uma função recursiva que recebe um número fracionário decimal por parâmetro e devolve um
+-- Definir uma função recursiva que recebe um número fracionário decimal por parâmetro e devolvrt e um
 -- número binário de ponto fixo de 32 bits. O número binário de ponto fixo dever ser representado por uma
 -- tupla com dois números binários tal que a parte inteira deve estar na representação de complemento de
 -- dois com 16 bits e a parte fracionária deve estar na representação de binário fracionado com 16 bits. Você
