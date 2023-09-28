@@ -40,7 +40,7 @@ soma1 b = dec2bin (somadec + 1) (length b)
 dec2bincompl :: Int -> Int -> [Int]
 dec2bincompl 0 0 = []
 dec2bincompl v t
-  | v<(-(2^(t-1))) && v>(2^(t-1)-1) = [-1] --lista vazia para quando nao for possivel representar o numero desejado com a qtd de bits desejada
+  | v<(-(2^(t-1))) || v>(2^(t-1)-1) = [-1] --lista vazia para quando nao for possivel representar o numero desejado com a qtd de bits desejada
   | v > 0 = dec2bin v t
   | otherwise = soma1 (invert (dec2bincompl (v * (-1)) t))
 
