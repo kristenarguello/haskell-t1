@@ -1,4 +1,3 @@
-import Control.Concurrent (takeMVar)
 -- Definir uma função recursiva que recebe um número binário (interpretado como número inteiro sem sinal) e
 -- retorna o valor equivalente em decimal. 𝑏𝑖𝑛2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡
 bin2dec :: [Int] -> Int
@@ -50,10 +49,21 @@ dec2bincompl v t = if v > 0
 -- dois com 16 bits e a parte fracionária deve estar na representação de binário fracionado com 16 bits. Você
 -- deve definir uma forma adequada de representar o resultado caso o número decimal estoure a
 -- representação. Por exemplo, 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 (−8.5) deve retornar
--- ([1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]). 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 ∷ 𝐷𝑜𝑢𝑏𝑙𝑒 →
--- ([𝐼𝑛𝑡],[𝐼𝑛𝑡])
+-- ([1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]). 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 ∷ 𝐷𝑜𝑢𝑏𝑙𝑒 → ([𝐼𝑛𝑡],[𝐼𝑛𝑡])
 frac2bin :: Double -> ([Int], [Int])
 frac2bin 0 = ([],[])
+frac2bin v = (dec2bincompl (inteiro v) 16, dec2bincompl (inteiro v) 16)
+                -- then (dec2bincompl (inteiro v) 16, fracionario (v - inteiro v))
+
+inteiro :: Double -> Int
+inteiro 0.0 = 0 
+
+fracionario :: Double -> [Int]
+fracionario 0.0 = dec2bin 0 16
+--fracionario:
+--vai indo da esquerda pra direita, mais ou menos mesma logica do faz binario, mas ao inves de 2 na alguma coisa, faz 1/2
+
+
 
 
 -- Definir uma função recursiva que recebe uma tupla com dois números binários representando,
