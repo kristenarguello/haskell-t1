@@ -52,17 +52,29 @@ dec2bincompl v t = if v > 0
 -- ([1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]). 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 ∷ 𝐷𝑜𝑢𝑏𝑙𝑒 → ([𝐼𝑛𝑡],[𝐼𝑛𝑡])
 frac2bin :: Double -> ([Int], [Int])
 frac2bin 0 = ([],[])
-frac2bin v = (dec2bincompl (inteiro v) 16, dec2bincompl (inteiro v) 16)
+frac2bin v = (dec2bincompl (fst (inteiro v)) 16, fracionario (snd (inteiro v)) 16)
                 -- then (dec2bincompl (inteiro v) 16, fracionario (v - inteiro v))
 
-inteiro :: Double -> Int
-inteiro 0.0 = 0 
+inteiro :: Double -> (Int, Double)
+inteiro 0.0 = (0, 0.0)
+inteiro v
+    | v < 0 = let (intPart, fracPart) = inteiro (-v)
+              in (-intPart, -fracPart)
+    | otherwise = let intPart = truncate v
+                      fracPart = v - fromIntegral intPart
+                  in (intPart, fracPart)
 
-fracionario :: Double -> [Int]
-fracionario 0.0 = dec2bin 0 16
---fracionario:
+-- fracionario :: Double -> [Int]
+-- fracionario 0.0 = dec2bin 0 16
+-- --fracionario:
 --vai indo da esquerda pra direita, mais ou menos mesma logica do faz binario, mas ao inves de 2 na alguma coisa, faz 1/2
 
+fracionario :: Double -> Int -> [Int]
+fracionario _ 0 = []
+fracionario x n = let newX = x * 2
+                      intPart = truncate newX
+                      fracPart = fracionario (newX - fromIntegral intPart) (n - 1)
+                  in intPart : fracPart
 
 
 
