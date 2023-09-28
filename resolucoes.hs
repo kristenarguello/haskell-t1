@@ -1,10 +1,10 @@
+import Control.Concurrent (takeMVar)
 -- Definir uma função recursiva que recebe um número binário (interpretado como número inteiro sem sinal) e
 -- retorna o valor equivalente em decimal. 𝑏𝑖𝑛2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡
 bin2dec :: [Int] -> Int
 bin2dec [] = 0
 bin2dec (0:xs) = 0 + bin2dec xs
 bin2dec (1:xs) = 2 ^ length xs + bin2dec xs
-
 
 -- Definir uma função recursiva que recebe um número decimal inteiro não-negativo, um número de bits
 -- desejado e retorna o valor equivalente em binário (interpretado como número inteiro sem sinal) com o
@@ -20,6 +20,18 @@ dec2bin v t = if v - (2 ^ (t-1)) < 0
 -- retorna o valor equivalente em decimal inteiro. 𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡
 bincompl2dec :: [Int] -> Int
 bincompl2dec [] = 0
+bincompl2dec (0:xs) = bin2dec xs
+bincompl2dec (1:xs) = - bin2dec (soma1 (invert (1:xs)))
+
+invert :: [Int] -> [Int]
+invert [] = []
+invert (1:xs) = 0 : invert xs
+invert (0:xs) = 1 : invert xs
+
+soma1 :: [Int] -> [Int]
+soma1 [] = []
+soma1 b = dec2bin (somadec + 1) (length b)
+            where somadec = bin2dec b
 
 
 -- Definir uma função recursiva que recebe um número decimal inteiro, um número de bits desejado e retorna
