@@ -11,9 +11,10 @@ bin2dec (1:xs) = 2 ^ length xs + bin2dec xs
 -- 𝐼𝑛𝑡 → [𝐼𝑛𝑡]
 dec2bin :: Int -> Int -> [Int]
 dec2bin 0 0 = []
-dec2bin v t = if v - (2 ^ (t-1)) < 0
-                then 0 : dec2bin v (t-1)
-                else 1 : dec2bin (v-(2 ^ (t-1))) (t-1)
+dec2bin v t
+  | v > (2^t) = [-1] --lista vazia para quando nao for possivel representar o numero desejado com a qtd de bits desejada
+  | v - (2 ^ (t-1)) < 0 = 0 : dec2bin v (t-1)
+  | otherwise = 1 : dec2bin (v-(2 ^ (t-1))) (t-1)
 
 -- Definir uma função recursiva que recebe um número binário na representação de complemento de dois e
 -- retorna o valor equivalente em decimal inteiro. 𝑏𝑖𝑛𝑐𝑜𝑚𝑝𝑙2𝑑𝑒𝑐 ∷ [𝐼𝑛𝑡] → 𝐼𝑛𝑡
@@ -38,9 +39,10 @@ soma1 b = dec2bin (somadec + 1) (length b)
 -- [𝐼𝑛𝑡]
 dec2bincompl :: Int -> Int -> [Int]
 dec2bincompl 0 0 = []
-dec2bincompl v t = if v > 0 
-                    then dec2bin v t
-                    else soma1(invert (dec2bincompl (v * (-1)) t))
+dec2bincompl v t
+  | v<(-(2^(t-1))) && v>(2^(t-1)-1) = [-1] --lista vazia para quando nao for possivel representar o numero desejado com a qtd de bits desejada
+  | v > 0 = dec2bin v t
+  | otherwise = soma1 (invert (dec2bincompl (v * (-1)) t))
 
 -- Definir uma função recursiva que recebe um número fracionário decimal por parâmetro e devolvrt e um
 -- número binário de ponto fixo de 32 bits. O número binário de ponto fixo dever ser representado por uma
@@ -51,7 +53,10 @@ dec2bincompl v t = if v > 0
 -- ([1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]). 𝑓𝑟𝑎𝑐2𝑏𝑖𝑛 ∷ 𝐷𝑜𝑢𝑏𝑙𝑒 → ([𝐼𝑛𝑡],[𝐼𝑛𝑡])
 frac2bin :: Double -> ([Int], [Int])
 frac2bin 0 = ([],[])
-frac2bin v = (dec2bincompl (fst (separainteiro v)) 16, fracionario (snd (separainteiro v)) 16)
+frac2bin v = if snd (separainteiro v) >= 1-0.5**16
+            then (dec2bincompl (fst (separainteiro (v+1))) 16, [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) 
+            --quando há estouro de representaçao da parte fracionária (maior ou igual a 0.9999847412109375), o valor é arredondado para cima 
+            else (dec2bincompl (fst (separainteiro v)) 16, fracionario (snd (separainteiro v)) 16)
 
 separainteiro :: Double -> (Int, Double)
 separainteiro 0.0 = (0, 0.0)
@@ -83,5 +88,5 @@ bin2frac (v, t) = if bincompl2dec v < 0
 
 decimal :: [Int] -> Double -> Double
 decimal [] _ = 0.0
-decimal (0:xs) i = 0 + decimal xs (i-1.0) 
+decimal (0:xs) i = 0 + decimal xs (i-1.0)
 decimal (1:xs) i = 2.0 ** i + decimal xs (i-1.0)
